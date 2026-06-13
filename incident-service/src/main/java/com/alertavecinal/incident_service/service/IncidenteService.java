@@ -23,19 +23,12 @@ public class IncidenteService {
     // 1. POST: Crear Incidente (Usado por Ciudadano)
     @Transactional
     public Incidente registrarIncidente(Incidente incidente) {
-        // Guardamos de forma síncrona en MySQL
         Incidente incidenteGuardado = incidenteRepository.save(incidente);
-
-        // DISPARO EN TIEMPO REAL: Enviamos el objeto serializado a los Sockets concurrentes
-        // Se envuelve en un try-catch para que un fallo en la notificación no revierta la transacción de la DB.
         try {
             notificadorAlerta.notificarAgentesEnTiempoReal(incidenteGuardado);
         } catch (Exception e) {
             System.err.println("Error al notificar a los agentes en tiempo real: " + e.getMessage());
-            // Opcional: Podrías loggear el error con un logger más robusto (ej. SLF4J)
-            // y/o implementar una lógica de reintento o compensación si la notificación es crítica.
         }
-
         return incidenteGuardado;
     }
 
@@ -72,17 +65,6 @@ public class IncidenteService {
         }
         return false;
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
 }
