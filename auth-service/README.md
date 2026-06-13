@@ -1,6 +1,6 @@
-# Auth Service - Alerta Vecinal
+# Microservicio de autenticacion (auth-service)
 
-Microservicio encargado del login y registro de usuarios para el proyecto de Alerta Vecinal.
+Microservicio encargado del login y registro de usuarios para el proyecto de alerta vecinal.
 
 ## Tecnologías
 - Java 25
@@ -27,8 +27,8 @@ Body (JSON):
 ```json
 {
     "username": "hector",
-    "password": "123",
-    "rol": "VECINO" // VECINO, SERENO, ADMIN
+    "password": "admin123",
+    "rol": "ROLE_ADMIN" // ROLE_VECINO, ROLE_SERENO, ROLE_ADMIN
 }
 ```
 
@@ -38,12 +38,12 @@ Body (JSON):
 ```json
 {
     "username": "hector",
-    "password": "123"
+    "password": "admin123"
 }
 ```
 *esto devuelve el token JWT que se usará como Bearer Token para consumir los demás servicios*
 
-## Detalles técnicos aplicados 
+## Detalles tecnicos
 - contraseñas encriptadas con BCrypt.
 - uso de clases DTO (GenericResponseDto y ErrorMessage) con lombok `@Builder`  que vi en clase
 
