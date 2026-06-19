@@ -1,0 +1,65 @@
+<div class="container py-4">
+  <div class="main-card">
+    <div class="card-header">
+      <h4><i class="fas fa-users"></i> Listado de empleados</h4>
+    </div>
+    <div class="card-body">
+      <div class="search-section">
+        <div class="search-form">
+          <input type="text" class="search-input" [(ngModel)]="searchTerm" placeholder="Buscar por nombre, apellido, email, sexo o teléfono..." (keyup.enter)="onSearch()">
+          <button class="btn-dark-action" (click)="onSearch()"><i class="fas fa-search"></i> Buscar</button>
+          <button *ngIf="searchTerm" class="btn-outline-custom" (click)="clearSearch()"><i class="fas fa-times"></i> Limpiar</button>
+        </div>
+        <div class="search-info" *ngIf="searchTerm">
+          <i class="fas fa-filter" style="color:var(--accent);"></i>
+          <strong>Filtrando por:</strong> "{{ searchTerm }}"
+          <span style="color:#A1A1AA;">|</span>
+          {{ totalElements }} resultado(s)
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <a class="btn-green" routerLink="/empleados/nuevo"><i class="fas fa-user-plus"></i> Agregar empleado</a>
+        <a class="btn-outline-custom" [href]="exportUrl"><i class="fas fa-file-pdf"></i> Exportar PDF</a>
+      </div>
+
+      <div class="table-container" *ngIf="empleados.length > 0; else noData">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>ID</th><th>Nombre</th><th>Apellido</th><th>Email</th><th>Cargo</th><th>Depto</th><th>Fecha</th><th>Teléfono</th><th>Sexo</th><th>Salario</th><th>Asist.</th><th>Tareas</th><th>Editar</th><th>Elim.</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let e of empleados">
+              <td style="font-weight:500;">{{ e.id }}</td>
+              <td>{{ e.nombre }}</td>
+              <td>{{ e.apellido }}</td>
+              <td style="color:#52525B;">{{ e.email }}</td>
+              <td>{{ e.cargo || '-' }}</td>
+              <td>{{ e.departamento || '-' }}</td>
+              <td>{{ e.fecha }}</td>
+              <td>{{ e.telefono }}</td>
+              <td>{{ e.sexo }}</td>
+              <td>S/ {{ e.salario }}</td>
+              <td><a class="btn-info btn-sm" [routerLink]="['/empleados', e.id, 'asistencia']"><i class="fas fa-calendar-check"></i></a></td>
+              <td><a class="btn-tareas btn-sm" [routerLink]="['/empleados', e.id, 'tareas']"><i class="fas fa-tasks"></i></a></td>
+              <td><a class="btn-warning btn-sm" [routerLink]="['/empleados/editar', e.id]"><i class="fas fa-edit"></i></a></td>
+              <td><button class="btn-danger btn-sm" (click)="onDelete(e.id!)"><i class="fas fa-trash-alt"></i></button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <ng-template #noData>
+        <div class="no-data">
+          <i class="fas fa-folder-open"></i>
+          <p style="font-weight:500;font-size:1.1rem;">{{ searchTerm ? 'No se encontraron empleados' : 'No hay empleados registrados' }}</p>
+        </div>
+      </ng-template>
+
+      <div class="mt-4">
+        <app-pagination [currentPage]="page" [totalPages]="totalPages" (pageChange)="onPageChange($event)"></app-pagination>
+      </div>
+    </div>
+  </div>
+</div>

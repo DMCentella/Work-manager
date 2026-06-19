@@ -1,0 +1,67 @@
+<div class="container py-4" *ngIf="empleado">
+  <div class="attendance-card">
+    <div class="card-header-custom">
+      <h4><i class="fas fa-user-clock me-2" style="color: var(--accent);"></i>Asistencias de {{ empleado.nombre }} {{ empleado.apellido }}
+        <small style="font-weight:400;opacity:0.7;font-size:0.85rem;margin-left:8px;" *ngIf="empleado.cargo">— {{ empleado.cargo }}</small>
+      </h4>
+      <a class="btn-pdf" [href]="exportUrl"><i class="fas fa-file-pdf"></i> Exportar PDF</a>
+    </div>
+    <div class="p-4">
+      <div class="resumen-row" *ngIf="asistencias.length > 0">
+        <div class="resumen-item"><div class="num c-total">{{ asistencias.length }}</div><div class="lbl">Total</div></div>
+        <div class="resumen-item"><div class="num c-presente">{{ countBy('PRESENTE') }}</div><div class="lbl">Presentes</div></div>
+        <div class="resumen-item"><div class="num c-tardanza">{{ countBy('TARDANZA') }}</div><div class="lbl">Tardanzas</div></div>
+        <div class="resumen-item"><div class="num c-falta">{{ countBy('FALTA') }}</div><div class="lbl">Faltas</div></div>
+      </div>
+
+      <div *ngIf="msg" class="success-msg"><i class="fas fa-check-circle"></i> {{ msg }}</div>
+
+      <div class="register-section">
+        <h6 style="color:var(--dark-bg);font-weight:700;"><i class="fas fa-plus-circle" style="color:var(--accent);"></i> Registrar Asistencia</h6>
+        <div class="register-form">
+          <div class="field-group">
+            <label>Fecha</label>
+            <input type="date" [(ngModel)]="nuevaFecha" required>
+          </div>
+          <div class="field-group">
+            <label>Estado</label>
+            <select [(ngModel)]="nuevoEstado">
+              <option value="PRESENTE">Presente</option>
+              <option value="TARDANZA">Tardanza</option>
+              <option value="FALTA">Falta</option>
+            </select>
+          </div>
+          <button class="btn-green" (click)="registrar()" [disabled]="loading">
+            <i class="fas fa-check"></i> {{ loading ? 'Registrando...' : 'Registrar' }}
+          </button>
+        </div>
+      </div>
+
+      <div class="table-responsive" *ngIf="asistencias.length > 0; else noData">
+        <table class="table table-hover">
+          <thead><tr><th>#</th><th>Fecha</th><th>Hora</th><th>Estado</th><th *ngIf="isAdmin">Acción</th></tr></thead>
+          <tbody>
+            <tr *ngFor="let a of asistencias; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td><span class="badge-fecha">{{ a.fecha }}</span></td>
+              <td>{{ a.hora || '-' }}</td>
+              <td><span [class]="'badge-estado badge-' + a.estado">{{ a.estado }}</span></td>
+              <td *ngIf="isAdmin">
+                <button class="btn btn-sm" style="color:#DC2626;background:transparent;border:1px solid #FECACA;border-radius:6px;padding:0.3rem 0.6rem;cursor:pointer;" (click)="onDelete(a.id!)">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <ng-template #noData>
+        <div class="no-data"><i class="fas fa-folder-open"></i><p style="font-weight:500;">No hay asistencias registradas</p></div>
+      </ng-template>
+
+      <div class="mt-4">
+        <a class="btn-outline-custom" [routerLink]="isAdmin ? '/empleados' : '/mi-panel'"><i class="fas fa-arrow-left"></i> Volver</a>
+      </div>
+    </div>
+  </div>
+</div>

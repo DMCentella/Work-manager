@@ -1,0 +1,5 @@
+.pagination-wrapper { display: flex; justify-content: center; gap: 0.4rem; flex-wrap: wrap; }
+.page-btn { background: #FFF; border: 1px solid var(--border-color); color: var(--dark-bg); padding: 0.5rem 0.9rem; border-radius: 6px; font-weight: 500; cursor: pointer; transition: all 0.2s; font-size: 0.9rem; }
+.page-btn:hover:not(.disabled):not(.active) { background: var(--primary-bg); }
+.page-btn.active { background: var(--dark-bg); color: #FFF; border-color: var(--dark-bg); }
+.page-btn.disabled { opacity: 0.4; cursor: not-allowed; }

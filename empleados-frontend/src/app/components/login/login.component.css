@@ -1,0 +1,15 @@
+.login-container { flex: 1; display: flex; align-items: center; justify-content: center; padding: 2rem; }
+.login-card { background: #FFF; border-radius: 8px; border: 1px solid var(--border-color); box-shadow: 0 4px 20px rgba(0,0,0,0.05); overflow: hidden; max-width: 420px; width: 100%; animation: fadeInUp 0.5s ease-out; }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.login-header { background: var(--dark-bg); padding: 2.5rem 2rem; text-align: center; color: #FFF; border-bottom: 3px solid var(--accent); }
+.login-header i { font-size: 3.5rem; margin-bottom: 1rem; color: var(--accent); }
+.login-header h3 { margin: 0; font-weight: 600; font-size: 1.6rem; }
+.login-body { padding: 2.5rem; }
+.form-label { color: var(--text-muted); font-weight: 600; margin-bottom: 0.5rem; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
+.input-group-text { background: var(--primary-bg); border: 1px solid #D4D4D8; border-right: none; color: #A1A1AA; border-radius: 6px 0 0 6px; }
+.form-control { border: 1px solid #D4D4D8; border-radius: 6px; padding: 0.75rem 1rem; font-size: 0.95rem; }
+.input-group .form-control { border-left: none; border-radius: 0 6px 6px 0; }
+.form-control:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(16,185,129,0.15); outline: none; }
+.btn-login-btn { background: var(--accent); border: none; color: #FFF; font-weight: 600; padding: 0.8rem; border-radius: 6px; width: 100%; transition: all 0.2s; font-size: 1rem; margin-top: 1rem; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; }
+.btn-login-btn:hover { background: var(--accent-hover); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(16,185,129,0.2); }
+.btn-login-btn:disabled { opacity: 0.6; cursor: not-allowed; }

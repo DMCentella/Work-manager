@@ -1,0 +1,59 @@
+<div class="container py-4" *ngIf="empleado">
+  <div class="page-header">
+    <div>
+      <h2><i class="fas fa-tasks me-2"></i>Gestionar Tareas</h2>
+      <p>{{ empleado.nombre }} {{ empleado.apellido }}</p>
+    </div>
+    <span class="badge-cargo">{{ empleado.cargo || 'Sin cargo' }}</span>
+  </div>
+
+  <div class="panel-grid">
+    <div class="card-section">
+      <div class="cs-header"><h5><i class="fas fa-plus-circle me-2"></i>Asignar nueva tarea</h5></div>
+      <div class="cs-body">
+        <div class="form-group">
+          <label class="form-label">Descripción *</label>
+          <textarea class="form-ctrl" rows="3" [(ngModel)]="nuevaTarea.descripcion" placeholder="Ej: Entregar paquetes en Zona Sur..." required></textarea>
+        </div>
+        <p class="section-mini"><i class="fas fa-truck"></i> Datos para Repartidor</p>
+        <div class="grid-2">
+          <div class="form-group"><label class="form-label">Placa</label><input class="form-ctrl" [(ngModel)]="nuevaTarea.placaVehiculo" placeholder="Ej: ABC-123"></div>
+          <div class="form-group"><label class="form-label">Zona</label><input class="form-ctrl" [(ngModel)]="nuevaTarea.zonaEntrega" placeholder="Ej: Zona Sur"></div>
+        </div>
+        <div class="form-group"><label class="form-label">Paquetes</label><input type="number" class="form-ctrl" [(ngModel)]="nuevaTarea.totalPaquetes" placeholder="Ej: 35" min="0"></div>
+        <p class="section-mini"><i class="fas fa-box"></i> Datos para Empaquetador</p>
+        <div class="grid-2">
+          <div class="form-group"><label class="form-label">Mesa</label><input type="number" class="form-ctrl" [(ngModel)]="nuevaTarea.numeroMesa" placeholder="Ej: 4" min="0"></div>
+          <div class="form-group"><label class="form-label">Meta cajas</label><input type="number" class="form-ctrl" [(ngModel)]="nuevaTarea.metaCajas" placeholder="Ej: 120" min="0"></div>
+        </div>
+        <button class="btn-guardar-tarea" (click)="onCrear()" [disabled]="!nuevaTarea.descripcion"><i class="fas fa-save me-1"></i> Asignar tarea</button>
+      </div>
+    </div>
+    <div class="card-section">
+      <div class="cs-header"><h5><i class="fas fa-list-check me-2"></i>Tareas asignadas <span style="font-weight:500;font-size:0.85rem;color:#71717A;margin-left:8px;">({{ tareas.length }} total)</span></h5></div>
+      <div class="cs-body" style="background:#FAFAFA;">
+        <div *ngIf="tareas.length === 0" class="empty-tasks"><i class="fas fa-clipboard-list"></i><p>Aún no hay tareas asignadas.</p></div>
+        <div *ngFor="let t of tareas" [class]="'task-row' + (t.completada ? ' completada' : '')">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+            <div class="task-desc">{{ t.descripcion }}</div>
+            <span *ngIf="t.completada" class="badge-comp"><i class="fas fa-check-circle me-1"></i> Completada</span>
+            <span *ngIf="!t.completada" class="badge-pend"><i class="fas fa-clock me-1"></i> Pendiente</span>
+          </div>
+          <div class="task-meta">
+            <span *ngIf="t.placaVehiculo" class="tag"><i class="fas fa-car me-1"></i> {{ t.placaVehiculo }}</span>
+            <span *ngIf="t.zonaEntrega" class="tag"><i class="fas fa-map-marker-alt me-1"></i> {{ t.zonaEntrega }}</span>
+            <span *ngIf="t.totalPaquetes" class="tag"><i class="fas fa-box me-1"></i> {{ t.totalPaquetes }} paquetes</span>
+            <span *ngIf="t.numeroMesa" class="tag"><i class="fas fa-table me-1"></i> {{ t.numeroMesa }}</span>
+            <span *ngIf="t.metaCajas" class="tag"><i class="fas fa-bullseye me-1"></i> Meta: {{ t.metaCajas }} cajas</span>
+            <span class="tag" style="background:var(--primary-bg);border:1px solid #D4D4D8;"><i class="fas fa-calendar-alt me-1"></i> {{ t.fechaAsignacion }}</span>
+            <span *ngIf="t.completada && t.fechaCompletado" class="tag tag-green"><i class="fas fa-check me-1"></i> {{ t.fechaCompletado }}</span>
+          </div>
+          <div class="task-actions">
+            <button class="btn-del-task" (click)="onDelete(t.id!)"><i class="fas fa-trash-alt me-1"></i> Eliminar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a class="btn-outline-custom" routerLink="/empleados" style="margin-top:1.5rem;"><i class="fas fa-arrow-left"></i> Volver al listado</a>
+</div>

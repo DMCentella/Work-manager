@@ -1,0 +1,90 @@
+<div class="container py-4">
+  <div class="welcome-banner">
+    <div>
+      <h2><i class="fas fa-chart-line me-2"></i>Dashboard</h2>
+      <p>Bienvenido al sistema de gestión de empleados — TechPeru S.A.C.</p>
+    </div>
+    <div class="welcome-icon"><i class="fas fa-building"></i></div>
+  </div>
+
+  <div class="dashboard-grid">
+    <div class="stat-card">
+      <div class="stat-icon icon-dark"><i class="fas fa-users"></i></div>
+      <div class="stat-info">
+        <h2>{{ totalEmpleados }}</h2>
+        <p>Total de Empleados</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon icon-green"><i class="fas fa-calendar-check"></i></div>
+      <div class="stat-info">
+        <h2>{{ asistenciasHoy }}</h2>
+        <p>Asistencias Hoy</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon icon-amber"><i class="fas fa-sitemap"></i></div>
+      <div class="stat-info">
+        <h2>{{ deptoCount }}</h2>
+        <p>Departamentos</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon icon-gray"><i class="fas fa-user-check"></i></div>
+      <div class="stat-info">
+        <h2>{{ sexoCount }}</h2>
+        <p>Géneros</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-md-7">
+      <div class="section-card">
+        <div class="section-header">
+          <h5><i class="fas fa-sitemap me-2" style="color: var(--accent);"></i>Empleados por Departamento</h5>
+        </div>
+        <div class="section-body">
+          <div *ngIf="departamentos.size === 0" style="color:#71717A; text-align:center; padding:1.5rem;">
+            <i class="fas fa-inbox mb-2" style="font-size:1.5rem;display:block;color:#D4D4D8;"></i> Sin datos aún
+          </div>
+          <div *ngFor="let entry of departamentos | keyvalue" class="depto-row">
+            <span class="depto-label">{{ entry.key }}</span>
+            <div class="depto-bar-wrap">
+              <div class="depto-bar" [style.width]="getWidth(entry.value) + '%'"></div>
+            </div>
+            <span class="depto-count">{{ entry.value }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="section-card">
+        <div class="section-header">
+          <h5><i class="fas fa-venus-mars me-2" style="color: var(--accent);"></i>Por Género</h5>
+        </div>
+        <div class="section-body">
+          <div class="sexo-grid">
+            <div *ngFor="let entry of sexos | keyvalue" class="sexo-item">
+              <div class="num">{{ entry.value }}</div>
+              <div class="lbl">{{ entry.key }}</div>
+            </div>
+            <div *ngIf="sexos.size === 0" style="color:#71717A;text-align:center;width:100%;font-weight:500;">Sin datos</div>
+          </div>
+        </div>
+      </div>
+      <div class="section-card">
+        <div class="section-header">
+          <h5><i class="fas fa-bolt me-2" style="color: var(--accent);"></i>Acciones Rápidas</h5>
+        </div>
+        <div class="section-body">
+          <div class="quick-actions">
+            <a class="btn-dark-action" routerLink="/empleados"><i class="fas fa-list"></i> Ver Empleados</a>
+            <a class="btn-green" routerLink="/empleados/nuevo"><i class="fas fa-user-plus"></i> Nuevo</a>
+            <a class="btn-outline-custom" [href]="exportUrl"><i class="fas fa-file-pdf"></i> PDF</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

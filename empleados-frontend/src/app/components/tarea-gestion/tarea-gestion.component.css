@@ -1,0 +1,37 @@
+.page-header { background: var(--dark-bg); color: #FFF; padding: 2rem; border-radius: 8px; margin-bottom: 2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: space-between; border-bottom: 4px solid var(--accent); }
+.page-header h2 { margin: 0; font-weight: 700; font-size: 1.6rem; }
+.page-header h2 i { color: var(--accent); }
+.page-header p { margin: 0; font-size: 1rem; color: #A1A1AA; margin-top: 5px; }
+.badge-cargo { background: rgba(16,185,129,0.15); color: var(--accent); padding: 0.4rem 1rem; border-radius: 6px; font-weight: 600; font-size: 0.9rem; border: 1px solid rgba(16,185,129,0.3); }
+.panel-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 1.5rem; }
+@media(max-width:900px) { .panel-grid { grid-template-columns: 1fr; } }
+.card-section { background: #FFF; border-radius: 8px; border: 1px solid var(--border-color); box-shadow: 0 2px 10px rgba(0,0,0,0.02); overflow: hidden; }
+.cs-header { padding: 1.2rem 1.5rem; background: var(--primary-bg); color: var(--dark-bg); border-bottom: 1px solid var(--border-color); }
+.cs-header h5 { margin: 0; font-weight: 600; display: flex; align-items: center; }
+.cs-header h5 i { color: var(--accent); }
+.cs-body { padding: 1.5rem; }
+.form-label { color: var(--text-muted); font-weight: 600; margin-bottom: 0.4rem; font-size: 0.85rem; text-transform: uppercase; }
+.form-ctrl { border: 1px solid #D4D4D8; border-radius: 6px; padding: 0.65rem 1rem; width: 100%; font-size: 0.95rem; background: #FFF; }
+.form-ctrl:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(16,185,129,0.15); outline: none; }
+.form-group { margin-bottom: 1.1rem; }
+.section-mini { color: var(--dark-bg); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; margin: 1.5rem 0 0.8rem; border-bottom: 1px solid var(--border-color); padding-bottom: 5px; }
+.section-mini i { color: var(--accent); margin-right: 5px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.btn-guardar-tarea { background: var(--accent); border: none; border-radius: 6px; padding: 0.75rem 2rem; font-weight: 600; color: #FFF; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: 0.2s; font-size: 1rem; width: 100%; justify-content: center; margin-top: 1rem; }
+.btn-guardar-tarea:hover { background: var(--accent-hover); transform: translateY(-1px); box-shadow: 0 4px 10px rgba(16,185,129,0.2); }
+.task-row { background: #FFF; border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem 1.2rem; margin-bottom: 0.8rem; transition: 0.2s; }
+.task-row:hover { border-color: #D4D4D8; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+.task-row.completada { opacity: 0.8; border-color: #D1FAE5; background: #F8FAFC; }
+.task-row.completada .task-desc { color: #71717A; text-decoration: line-through; }
+.task-desc { font-weight: 600; color: var(--dark-bg); margin-bottom: 0.6rem; font-size: 1.05rem; }
+.task-meta { font-size: 0.82rem; color: #71717A; display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.tag { background: var(--primary-bg); color: var(--text-muted); padding: 0.25rem 0.6rem; border-radius: 6px; font-weight: 500; border: 1px solid var(--border-color); }
+.tag i { color: #A1A1AA; }
+.tag-green { background: #D1FAE5; color: #065F46; border: 1px solid #A7F3D0; }
+.badge-comp { background: #D1FAE5; color: #065F46; padding: 0.3rem 0.75rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600; border: 1px solid #A7F3D0; }
+.badge-pend { background: #FEF3C7; color: #92400E; padding: 0.3rem 0.75rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600; border: 1px solid #FDE68A; }
+.task-actions { display: flex; gap: 0.5rem; margin-top: 0.8rem; }
+.btn-del-task { background: transparent; border: 1px solid var(--border-color); border-radius: 6px; padding: 0.35rem 0.8rem; color: #EF4444; font-size: 0.8rem; font-weight: 500; cursor: pointer; transition: 0.2s; }
+.btn-del-task:hover { background: #FEF2F2; border-color: #FECACA; color: #DC2626; }
+.empty-tasks { text-align: center; padding: 3rem 2rem; color: #71717A; font-weight: 500; }
+.empty-tasks i { font-size: 2.5rem; color: #D4D4D8; display: block; margin-bottom: 1rem; }

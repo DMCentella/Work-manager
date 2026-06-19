@@ -1,0 +1,70 @@
+<nav class="navbar navbar-expand-lg navbar-dark" *ngIf="isLoggedIn$ | async">
+  <div class="container-fluid">
+    <a class="navbar-brand" [routerLink]="(isAdmin$ | async) ? '/dashboard' : '/mi-panel'">
+      <i class="fas fa-building"></i> Gestión de Empleados
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav me-3">
+        <li class="nav-item" *ngIf="isAdmin$ | async">
+          <a class="nav-link-custom" routerLink="/dashboard" routerLinkActive="active">
+            <i class="fas fa-chart-line"></i> Dashboard
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="isAdmin$ | async">
+          <a class="nav-link-custom" routerLink="/empleados" routerLinkActive="active">
+            <i class="fas fa-users"></i> Empleados
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="(isAdmin$ | async) === false">
+          <a class="nav-link-custom" routerLink="/mi-panel" routerLinkActive="active">
+            <i class="fas fa-user-circle"></i> Mi Panel
+          </a>
+        </li>
+
+        <li class="nav-item dropdown" *ngIf="isLoggedIn$ | async">
+          <a class="nav-link-custom position-relative" href="#" role="button"
+             data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-bell"></i>
+            <span *ngIf="(unreadCount$ | async) || 0 as count"
+                  class="notif-badge" [class.d-none]="count === 0">
+              {{ count > 9 ? '9+' : count }}
+            </span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-end p-0 notif-dropdown">
+            <div class="notif-header">
+              <span><i class="fas fa-bell"></i> Notificaciones</span>
+              <button class="notif-mark-all" (click)="markAllAsRead()"
+                      *ngIf="(unreadCount$ | async) || 0 as unread" [class.d-none]="unread === 0">
+                Marcar todas leídas
+              </button>
+            </div>
+            <div class="notif-body">
+              <div *ngIf="(notifications$ | async) as notifs">
+                <div *ngIf="notifs.length === 0" class="notif-empty">
+                  <i class="fas fa-inbox"></i>
+                  <p>No hay notificaciones</p>
+                </div>
+                <div *ngFor="let n of notifs.slice(0, 10)"
+                     class="notif-item" [class.unread]="!n.leida" (click)="onNotifClick(n)">
+                  <p class="notif-mensaje">{{ n.mensaje }}</p>
+                  <span class="notif-fecha">{{ n.fechaCreacion }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <span class="welcome-user">
+        <i class="fas fa-user-tie"></i> {{ username }}
+      </span>
+      <button class="btn-logout" (click)="logout()">
+        <i class="fas fa-sign-out-alt"></i> Salir
+      </button>
+    </div>
+  </div>
+</nav>

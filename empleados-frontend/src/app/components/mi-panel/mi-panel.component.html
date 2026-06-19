@@ -1,0 +1,94 @@
+<div class="container py-4">
+  <div *ngIf="!empleado" class="link-alert">
+    <i class="fas fa-user-slash" style="font-size:3rem;margin-bottom:1rem;display:block;color:#D97706;"></i>
+    <h4 style="font-weight:700;">No hay perfil vinculado a tu usuario</h4>
+    <p style="margin-bottom:0;">Pide al administrador que vincule tu usuario con un empleado.</p>
+  </div>
+
+  <div *ngIf="empleado">
+    <div class="employee-hero">
+      <div class="hero-avatar"><i class="fas fa-user-tie"></i></div>
+      <div class="hero-info">
+        <h2>{{ empleado.nombre }} {{ empleado.apellido }}</h2>
+        <p>{{ empleado.email }}</p>
+        <div class="hero-badges">
+          <span class="hero-badge" *ngIf="empleado.cargo"><i class="fas fa-briefcase"></i>{{ empleado.cargo }}</span>
+          <span class="hero-badge" *ngIf="empleado.departamento"><i class="fas fa-sitemap"></i>{{ empleado.departamento }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="msg" class="success-msg"><i class="fas fa-check-circle"></i> {{ msg }}</div>
+
+    <div class="main-grid">
+      <div>
+        <div class="panel-card mb-4">
+          <div class="pc-header pc-header-dark"><h5><i class="fas fa-tools me-2"></i>Mis Herramientas</h5></div>
+          <div class="pc-body">
+            <div *ngIf="hasTools()" class="tool-card">
+              <div class="tool-item" *ngIf="tools.placaVehiculo"><div class="tool-icon"><i class="fas fa-car"></i></div><div><div class="tool-label">Vehículo</div><div class="tool-value">{{ tools.placaVehiculo }}</div></div></div>
+              <div class="tool-item" *ngIf="tools.zonaEntrega"><div class="tool-icon"><i class="fas fa-map-marker-alt"></i></div><div><div class="tool-label">Zona</div><div class="tool-value">{{ tools.zonaEntrega }}</div></div></div>
+              <div class="tool-item" *ngIf="tools.totalPaquetes"><div class="tool-icon"><i class="fas fa-box"></i></div><div><div class="tool-label">Paquetes</div><div class="tool-value">{{ tools.totalPaquetes }}</div></div></div>
+              <div class="tool-item" *ngIf="tools.numeroMesa"><div class="tool-icon"><i class="fas fa-table"></i></div><div><div class="tool-label">Mesa</div><div class="tool-value">{{ tools.numeroMesa }}</div></div></div>
+              <div class="tool-item" *ngIf="tools.metaCajas"><div class="tool-icon"><i class="fas fa-bullseye"></i></div><div><div class="tool-label">Meta cajas</div><div class="tool-value">{{ tools.metaCajas }}</div></div></div>
+            </div>
+            <div *ngIf="!hasTools()" class="no-tools"><i class="fas fa-toolbox" style="font-size:2.5rem;color:#D4D4D8;display:block;margin-bottom:1rem;"></i>No hay herramientas asignadas.</div>
+          </div>
+        </div>
+        <div class="panel-card">
+          <div class="pc-header pc-header-dark"><h5><i class="fas fa-calendar-check me-2"></i>Mis Asistencias</h5></div>
+          <div class="pc-body">
+            <div class="asist-resumen" *ngIf="asistencias.length > 0">
+              <div class="asist-item"><div class="asist-num c-total">{{ asistencias.length }}</div><div class="asist-lbl">Total</div></div>
+              <div class="asist-item"><div class="asist-num c-p">{{ countBy('PRESENTE') }}</div><div class="asist-lbl">Presentes</div></div>
+              <div class="asist-item"><div class="asist-num c-t">{{ countBy('TARDANZA') }}</div><div class="asist-lbl">Tardanzas</div></div>
+              <div class="asist-item"><div class="asist-num c-f">{{ countBy('FALTA') }}</div><div class="asist-lbl">Faltas</div></div>
+            </div>
+            <div *ngIf="asistencias.length === 0" class="no-tools" style="padding:1rem;">Sin registros de asistencia.</div>
+            <table class="table table-borderless" *ngIf="asistencias.length > 0">
+              <thead><tr><th>Fecha</th><th>Hora</th><th>Estado</th></tr></thead>
+              <tbody>
+                <tr *ngFor="let a of asistencias.slice(0, 5)">
+                  <td style="font-weight:500;">{{ a.fecha }}</td>
+                  <td>{{ a.hora || '-' }}</td>
+                  <td><span [class]="'badge-estado badge-' + a.estado">{{ a.estado }}</span></td>
+                </tr>
+              </tbody>
+            </table>
+            <a *ngIf="empleado && asistencias.length > 0" class="link-historial" [routerLink]="['/empleados', empleado.id, 'asistencia']">Ver historial completo <i class="fas fa-arrow-right ms-1"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-card">
+        <div class="pc-header pc-header-green">
+          <h5><i class="fas fa-list-check me-2"></i>Mis Tareas <span style="font-weight:500;font-size:0.85rem;color:#71717A;margin-left:8px;">({{ tareas.length }} total)</span></h5>
+        </div>
+        <div class="pc-body" style="background:#FAFAFA;">
+          <div *ngIf="tareas.length === 0" class="empty-msg"><i class="fas fa-clipboard-check"></i><p>No tienes tareas asignadas.</p></div>
+          <div *ngFor="let t of tareas" [class]="'task-item' + (t.completada ? ' done' : '')">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.5rem;">
+              <div class="task-desc">{{ t.descripcion }}</div>
+              <span *ngIf="t.completada" class="badge-comp"><i class="fas fa-check-circle me-1"></i> Listo</span>
+            </div>
+            <div class="task-tags">
+              <span *ngIf="t.placaVehiculo" class="tag"><i class="fas fa-car me-1"></i> {{ t.placaVehiculo }}</span>
+              <span *ngIf="t.zonaEntrega" class="tag"><i class="fas fa-map-marker-alt me-1"></i> {{ t.zonaEntrega }}</span>
+              <span *ngIf="t.totalPaquetes" class="tag"><i class="fas fa-box me-1"></i> {{ t.totalPaquetes }} paq.</span>
+              <span *ngIf="t.numeroMesa" class="tag"><i class="fas fa-table me-1"></i> {{ t.numeroMesa }}</span>
+              <span *ngIf="t.metaCajas" class="tag"><i class="fas fa-bullseye me-1"></i> Meta: {{ t.metaCajas }}</span>
+            </div>
+            <div *ngIf="!t.completada" style="margin-top:10px;">
+              <button class="btn-completar" (click)="onCompletar(t.id!)">
+                <i class="fas fa-check"></i> Marcar como completada
+              </button>
+            </div>
+            <div *ngIf="t.completada && t.fechaCompletado" style="font-size:0.85rem;color:var(--accent);margin-top:10px;font-weight:500;">
+              <i class="fas fa-check me-1"></i> Completada el {{ t.fechaCompletado }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

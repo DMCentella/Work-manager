@@ -1,0 +1,30 @@
+.attendance-card { background: #FFF; border-radius: 10px; border: 1px solid var(--border-color); box-shadow: 0 4px 15px rgba(0,0,0,0.05); overflow: hidden; margin-top: 2rem; animation: fadeIn 0.5s ease-out; }
+.card-header-custom { background: var(--dark-bg); color: #FFF; padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--accent); }
+.card-header-custom h4 { margin: 0; font-weight: 600; }
+.register-section { background: var(--primary-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; }
+.register-form { display: flex; gap: 1.2rem; align-items: flex-end; flex-wrap: wrap; }
+.field-group { display: flex; flex-direction: column; gap: 6px; }
+.field-group label { color: var(--dark-bg); font-weight: 600; font-size: 0.85rem; text-transform: uppercase; }
+.field-group input, .field-group select { border: 1px solid #D4D4D8; border-radius: 6px; padding: 0.7rem 1rem; font-size: 0.95rem; background: #FFF; }
+.field-group input:focus, .field-group select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(16,185,129,0.15); outline: none; }
+.btn-pdf { background: transparent; border: 1px solid var(--border-color); border-radius: 6px; padding: 0.5rem 1rem; font-weight: 500; color: var(--border-color); text-decoration: none; transition: 0.2s; font-size: 0.9rem; display: flex; align-items: center; gap: 6px; cursor: pointer; }
+.btn-pdf:hover { background: var(--border-color); color: var(--dark-bg); }
+.table { margin-bottom: 0; }
+.table thead { background: #27272A; color: #FFF; }
+.table thead th { border: none; padding: 1rem; font-weight: 500; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.5px; }
+.table tbody tr { transition: background 0.2s; }
+.table tbody tr:hover { background: var(--primary-bg); }
+.table tbody td { padding: 1rem; vertical-align: middle; border-bottom: 1px solid var(--border-color); font-size: 0.95rem; }
+.resumen-row { display: flex; gap: 1.2rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.resumen-item { background: #FFF; border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem 1.2rem; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.02); flex: 1; min-width: 120px; }
+.resumen-item .num { font-size: 1.8rem; font-weight: 700; }
+.resumen-item .lbl { font-size: 0.75rem; color: #71717A; font-weight: 600; text-transform: uppercase; margin-top: 4px; }
+.c-total { color: var(--dark-bg); } .c-presente { color: var(--accent); } .c-tardanza { color: #F59E0B; } .c-falta { color: #EF4444; }
+.badge-fecha { background: var(--primary-bg); color: var(--dark-bg); padding: 0.35rem 0.75rem; border-radius: 6px; font-weight: 600; font-size: 0.85rem; border: 1px solid var(--border-color); }
+.badge-estado { padding: 0.35rem 0.8rem; border-radius: 6px; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; }
+.badge-PRESENTE { background: #D1FAE5; color: #065F46; border: 1px solid #A7F3D0; }
+.badge-TARDANZA { background: #FEF3C7; color: #92400E; border: 1px solid #FDE68A; }
+.badge-FALTA { background: #FEE2E2; color: #991B1B; border: 1px solid #FECACA; }
+.no-data { text-align: center; padding: 3rem; color: #71717A; }
+.no-data i { font-size: 2.5rem; color: #D4D4D8; display: block; margin-bottom: 1rem; }
+.success-msg { background: #D1FAE5; color: #065F46; padding: 0.75rem 1rem; border-radius: 6px; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
