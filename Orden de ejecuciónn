@@ -1,0 +1,12 @@
+Orden de ejecucion :
+
+1. MySQL
+2. RabbitMQ
+3. Eureka Server
+4. Auth Service
+5. Empleado Service
+6. Asistencia Service
+7. Tarea Service
+8. Notification Service
+9. API Gateway
+10. Angular
