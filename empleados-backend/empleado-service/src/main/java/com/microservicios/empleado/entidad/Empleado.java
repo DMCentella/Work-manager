@@ -1,5 +1,6 @@
 package com.microservicios.empleado.entidad;
 
+import com.microservicios.empleado.enums.Estadoempleado;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -49,4 +50,9 @@ public class Empleado {
 
     @NotEmpty
     private String departamento;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Estadoempleado estado = Estadoempleado.ACTIVO;
+
 }

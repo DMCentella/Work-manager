@@ -16,12 +16,12 @@ public class RabbitConfig {
     public static final String QUEUE_TAREA_CREADA = "tarea.creada.queue";
     public static final String QUEUE_TAREA_COMPLETADA = "tarea.completada.queue";
     public static final String QUEUE_ASISTENCIA = "asistencia.registrada.queue";
-    public static final String QUEUE_EMPLEADO_CESADO = "empleado.cesado.queue";
+
 
     public static final String RK_TAREA_CREADA = "tarea.creada";
     public static final String RK_TAREA_COMPLETADA = "tarea.completada";
     public static final String RK_ASISTENCIA = "asistencia.registrada";
-    public static final String RK_EMPLEADO_CESADO = "empleado.cesado";
+
 
     @Bean
     public TopicExchange exchange() {
@@ -43,10 +43,7 @@ public class RabbitConfig {
         return new Queue(QUEUE_ASISTENCIA, true);
     }
 
-    @Bean
-    public Queue queueEmpleadoCesado() {
-        return new Queue(QUEUE_EMPLEADO_CESADO, true);
-    }
+
 
     @Bean
     public Binding bindingTareaCreada() {
@@ -63,10 +60,7 @@ public class RabbitConfig {
         return BindingBuilder.bind(queueAsistencia()).to(exchange()).with(RK_ASISTENCIA);
     }
 
-    @Bean
-    public Binding bindingEmpleadoCesado() {
-        return BindingBuilder.bind(queueEmpleadoCesado()).to(exchange()).with(RK_EMPLEADO_CESADO);
-    }
+
 
     @Bean
     public Jackson2JsonMessageConverter messageConverter() {

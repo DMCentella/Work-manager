@@ -13,7 +13,7 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./empleado-form.component.css']
 })
 export class EmpleadoFormComponent implements OnInit {
-  empleado: Empleado = { nombre: '', apellido: '', email: '', telefono: '', sexo: '', salario: 0, fecha: new Date().toISOString().split('T')[0], cargo: '', departamento: '' };
+  empleado: Empleado = { nombre: '', apellido: '', email: '', telefono: '', sexo: '', salario: 0, fecha: new Date().toISOString().split('T')[0], cargo: '', departamento: '', estado: 'ACTIVO' };
   isEdit = false;
   tieneUsuario = false;
   username = '';

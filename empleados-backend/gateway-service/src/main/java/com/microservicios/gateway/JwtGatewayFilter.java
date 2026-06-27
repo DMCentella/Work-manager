@@ -22,7 +22,11 @@ public class JwtGatewayFilter extends AbstractGatewayFilterFactory<JwtGatewayFil
         return (exchange, chain) -> {
             String path = exchange.getRequest().getURI().getPath();
 
-            if (path.startsWith("/api/auth/login") || path.startsWith("/api/auth/register")) {
+            if (path.startsWith("/api/auth/login") || path.startsWith("/api/auth/register") || path.startsWith("/ws"))
+
+            {
+
+
                 return chain.filter(exchange);
             }
 
@@ -35,13 +39,14 @@ public class JwtGatewayFilter extends AbstractGatewayFilterFactory<JwtGatewayFil
             try {
                 String token = authHeader.substring(7);
                 Claims claims = JwtUtil.validateToken(token);
-                exchange.getRequest().mutate()
+                var mutatedRequest = exchange.getRequest().mutate()
                         .header("X-Username", claims.getSubject())
                         .header("X-Roles", String.join(",", claims.get("roles", List.class)))
                         .header("X-UserId", claims.get("userId", String.class))
                         .header("X-EmpleadoId", claims.get("empleadoId", String.class) != null
                                 ? claims.get("empleadoId", String.class) : "")
                         .build();
+                exchange = exchange.mutate().request(mutatedRequest).build();
             } catch (Exception e) {
                 exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
                 return exchange.getResponse().setComplete();

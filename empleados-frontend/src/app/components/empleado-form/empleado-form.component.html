@@ -13,21 +13,41 @@
         <div class="row">
           <div class="col-md-6 mb-3">
             <label class="form-label">Nombre:</label>
-            <input type="text" class="form-control" [(ngModel)]="empleado.nombre" name="nombre" required>
+            <input type="text" class="form-control" [(ngModel)]="empleado.nombre" name="nombre" placeholder="Ej: Juan"
+              maxlength="50" required>
+
+            <small class="text-muted">
+              Ingrese solo el nombre del empleado.
+            </small>
           </div>
           <div class="col-md-6 mb-3">
             <label class="form-label">Apellido:</label>
-            <input type="text" class="form-control" [(ngModel)]="empleado.apellido" name="apellido" required>
+            <input type="text" class="form-control" [(ngModel)]="empleado.apellido" name="apellido"
+              placeholder="Ej: Pérez" maxlength="50" required>
+
+            <small class="text-muted">
+              Ingrese los apellidos del empleado.
+            </small>
           </div>
         </div>
         <div class="row">
           <div class="col-md-6 mb-3">
-            <label class="form-label">Email:</label>
-            <input type="email" class="form-control" [(ngModel)]="empleado.email" name="email" required>
+            <label class="form-label">Apellido:</label>
+            <input type="text" class="form-control" [(ngModel)]="empleado.apellido" name="apellido"
+              placeholder="Ej: Pérez" maxlength="50" required>
+
+            <small class="text-muted">
+              Ingrese los apellidos del empleado.
+            </small>
           </div>
           <div class="col-md-6 mb-3">
             <label class="form-label">Teléfono:</label>
-            <input type="text" class="form-control" maxlength="9" [(ngModel)]="empleado.telefono" name="telefono" required>
+            <input type="text" class="form-control" maxlength="9" placeholder="987654321"
+              [(ngModel)]="empleado.telefono" name="telefono" required>
+
+            <small class="text-muted">
+              Debe contener exactamente 9 dígitos.
+            </small>
           </div>
         </div>
         <div class="mb-3">
@@ -41,7 +61,15 @@
 
         <h5 class="section-title"><i class="fas fa-briefcase"></i> Datos Laborales</h5>
         <div class="row">
-          <div class="col-md-6 mb-3"><label class="form-label">Cargo:</label><input type="text" class="form-control" [(ngModel)]="empleado.cargo" name="cargo"></div>
+          <div class="col-md-6 mb-3"><label class="form-label">Cargo:</label>
+
+            <input type="text" class="form-control" placeholder="Ej: Supervisor" maxlength="50"
+              [(ngModel)]="empleado.cargo" name="cargo">
+
+            <small class="text-muted">
+              Indique el puesto que desempeña el empleado.
+            </small>
+          </div>
           <div class="col-md-6 mb-3">
             <label class="form-label">Departamento:</label>
             <select class="form-select" [(ngModel)]="empleado.departamento" name="departamento" required>
@@ -49,12 +77,26 @@
               <option value="Operaciones">Operaciones</option>
               <option value="Tecnología">Tecnología</option>
               <option value="Gerencia">Gerencia</option>
+              <small class="text-muted">
+                Seleccione el área donde trabajará el empleado.
+              </small>
             </select>
           </div>
         </div>
         <div class="row">
-          <div class="col-md-6 mb-3"><label class="form-label">Salario:</label><input type="number" step="0.01" class="form-control" [(ngModel)]="empleado.salario" name="salario"></div>
-          <div class="col-md-6 mb-3"><label class="form-label">Fecha ingreso:</label><input type="date" class="form-control" [(ngModel)]="empleado.fecha" name="fecha"></div>
+          <div class="col-md-6 mb-3"><label class="form-label">Salario:</label>
+
+            <input type="number" min="0" step="0.01" class="form-control" placeholder="Ej: 2500.00"
+              [(ngModel)]="empleado.salario" name="salario">
+
+            <small class="text-muted">
+              Debe ser mayor que 0.
+            </small>
+          </div>
+          <div class="col-md-6 mb-3"><label class="form-label">Fecha ingreso:</label><input type="date"
+              class="form-control" [(ngModel)]="empleado.fecha" name="fecha"> <small class="text-muted">
+              Seleccione la fecha de ingreso del empleado.
+            </small></div>
         </div>
 
         <div *ngIf="!isEdit || !tieneUsuario">
@@ -65,14 +107,24 @@
           <div class="row">
             <div class="col-md-6 mb-3">
               <label class="form-label">Usuario:</label>
-              <input type="text" class="form-control" [(ngModel)]="username" name="user" placeholder="Ej: jdoe">
+              <input type="text" class="form-control" [(ngModel)]="username" name="user" placeholder="Ej: jperez">
+
+              <small class="text-muted">
+                Solo letras, números o guion bajo.
+              </small>
             </div>
             <div class="col-md-6 mb-3">
               <label class="form-label">Contraseña:</label>
               <div class="input-group">
-                <input [type]="showPass ? 'text' : 'password'" class="form-control" [(ngModel)]="password" name="pass" placeholder="Mín. 5 caracteres">
-                <button type="button" class="btn-input-group" (click)="togglePass()"><i [class]="showPass ? 'fas fa-eye-slash' : 'fas fa-eye'"></i></button>
-                <button type="button" class="btn-input-group-dark" (click)="generarPass()"><i class="fas fa-random"></i> Generar</button>
+                <input [type]="showPass ? 'text' : 'password'" class="form-control" [(ngModel)]="password" name="pass"
+                  placeholder="Mín. 8 caracteres">
+                <small class="text-muted">
+                  Debe contener al menos 8 caracteres, una letra y un número.
+                </small>
+                <button type="button" class="btn-input-group" (click)="togglePass()"><i
+                    [class]="showPass ? 'fas fa-eye-slash' : 'fas fa-eye'"></i></button>
+                <button type="button" class="btn-input-group-dark" (click)="generarPass()"><i class="fas fa-random"></i>
+                  Generar</button>
               </div>
             </div>
           </div>

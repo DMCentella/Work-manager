@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
 import java.util.List;
@@ -12,7 +13,9 @@ import java.util.Map;
 
 public class JwtUtil {
 
-    private static final Key SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    private static final Key SECRET_KEY = Keys.hmacShaKeyFor(
+            "mCjGjYrN4Bz6DfFgHkLmNpQrStUwXyZaAbCdEfGhIjKlMnOpQrStUvWxYz0123456789"
+                    .getBytes(StandardCharsets.UTF_8));
     private static final long EXPIRATION_MS = 8 * 60 * 60 * 1000; // 8 horas
 
     public static String generateToken(String username, List<String> roles, Map<String, Object> extraClaims) {

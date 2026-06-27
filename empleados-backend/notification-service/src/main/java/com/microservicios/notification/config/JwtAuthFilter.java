@@ -1,4 +1,4 @@
-package com.microservicios.asistencia.config;
+package com.microservicios.notification.config;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

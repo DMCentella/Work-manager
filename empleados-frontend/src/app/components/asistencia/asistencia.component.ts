@@ -35,10 +35,9 @@ export class AsistenciaComponent implements OnInit {
 
   ngOnInit(): void {
     this.empleadoId = +this.route.snapshot.paramMap.get('id')!;
-    this.empService.obtener(this.empleadoId).subscribe(e => {
-      this.empleado = e;
-      this.exportUrl = this.asistService.exportarPDF(this.empleadoId, e.nombre + ' ' + e.apellido);
-    });
+this.empService.obtener(this.empleadoId).subscribe(e => {
+  this.empleado = e;
+});
     this.loadAsistencias();
   }
 
@@ -71,4 +70,26 @@ export class AsistenciaComponent implements OnInit {
       this.asistService.eliminar(id).subscribe(() => this.loadAsistencias());
     }
   }
+  descargarPDF(): void {
+
+  const nombreCompleto =
+      `${this.empleado.nombre} ${this.empleado.apellido}`;
+
+  this.asistService
+      .exportarPDF(this.empleadoId, nombreCompleto)
+      .subscribe({
+        next: (blob) => {
+
+          const url = window.URL.createObjectURL(blob);
+
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'asistencias.pdf';
+          a.click();
+
+          window.URL.revokeObjectURL(url);
+        },
+        error: err => console.error(err)
+      });
+}
 }

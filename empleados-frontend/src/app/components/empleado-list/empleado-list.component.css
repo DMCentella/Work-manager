@@ -24,8 +24,8 @@
 .btn-tareas:hover { background: #D1FAE5; color: #064E3B; }
 .btn-warning { color: #D97706; border-color: #FDE68A; }
 .btn-warning:hover { background: #FEF3C7; color: #92400E; }
-.btn-danger { color: #DC2626; border-color: #FECACA; }
-.btn-danger:hover { background: #FEF2F2; color: #991B1B; }
+.btn-danger {  border-color: #FECACA; }
+.btn-danger:hover { background: #FEE2E2; color: #991B1B; }
 .no-data { text-align: center; padding: 4rem 2rem; color: #71717A; }
 .no-data i { font-size: 3rem; margin-bottom: 1rem; color: #D4D4D8; display: block; }
 @media(max-width:768px) { .search-form { flex-direction: column; } .search-input { width: 100%; } }

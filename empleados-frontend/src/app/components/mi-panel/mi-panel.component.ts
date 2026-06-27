@@ -5,6 +5,7 @@ import { NgFor, NgIf } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { AsistenciaService, Asistencia } from '../../services/asistencia.service';
 import { TareaService, TareaEmpleado } from '../../services/tarea.service';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-mi-panel',
@@ -24,7 +25,8 @@ export class MiPanelComponent implements OnInit {
     private auth: AuthService,
     private http: HttpClient,
     private asistService: AsistenciaService,
-    private tareaService: TareaService
+    private tareaService: TareaService,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -57,7 +59,31 @@ export class MiPanelComponent implements OnInit {
           };
         }
       });
+
+      this.notificationService.notifications$.subscribe(() => {
+  if (this.empleado?.id) {
+    this.tareaService
+      .porEmpleado(this.empleado.id)
+      .subscribe(t => {
+        this.tareas = t;
+
+        if (t.length > 0) {
+          this.tools = {
+            placaVehiculo: t[0].placaVehiculo,
+            zonaEntrega: t[0].zonaEntrega,
+            totalPaquetes: t[0].totalPaquetes,
+            numeroMesa: t[0].numeroMesa,
+            metaCajas: t[0].metaCajas
+          };
+        }
+      });
+       this.asistService.porEmpleado(empleadoId)
+        .subscribe(a => this.asistencias = a);
+
+  }
+});
     }
+    
   }
 
   hasTools(): boolean {

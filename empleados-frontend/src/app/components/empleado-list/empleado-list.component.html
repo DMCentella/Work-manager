@@ -20,14 +20,16 @@
 
       <div class="action-buttons">
         <a class="btn-green" routerLink="/empleados/nuevo"><i class="fas fa-user-plus"></i> Agregar empleado</a>
-        <a class="btn-outline-custom" [href]="exportUrl"><i class="fas fa-file-pdf"></i> Exportar PDF</a>
+        <button class="btn btn-danger" (click)="descargarPDF()">
+    Exportar PDF
+</button>
       </div>
 
       <div class="table-container" *ngIf="empleados.length > 0; else noData">
         <table class="table table-hover">
           <thead>
             <tr>
-              <th>ID</th><th>Nombre</th><th>Apellido</th><th>Email</th><th>Cargo</th><th>Depto</th><th>Fecha</th><th>Teléfono</th><th>Sexo</th><th>Salario</th><th>Asist.</th><th>Tareas</th><th>Editar</th><th>Elim.</th>
+              <th>ID</th><th>Nombre</th><th>Apellido</th><th>Email</th><th>Cargo</th><th>Depto</th><th>Fecha</th><th>Teléfono</th><th>Sexo</th><th>Salario</th> <th>Estado</th><th>Asist.</th><th>Tareas</th><th>Editar</th><th>Cambiar Estado</th>
             </tr>
           </thead>
           <tbody>
@@ -42,10 +44,32 @@
               <td>{{ e.telefono }}</td>
               <td>{{ e.sexo }}</td>
               <td>S/ {{ e.salario }}</td>
+<td>
+  <span
+    class="badge"
+    [class.bg-success]="e.estado === 'ACTIVO'"
+    [class.bg-danger]="e.estado === 'INACTIVO'">
+    {{ e.estado }}
+  </span>
+</td>
               <td><a class="btn-info btn-sm" [routerLink]="['/empleados', e.id, 'asistencia']"><i class="fas fa-calendar-check"></i></a></td>
               <td><a class="btn-tareas btn-sm" [routerLink]="['/empleados', e.id, 'tareas']"><i class="fas fa-tasks"></i></a></td>
               <td><a class="btn-warning btn-sm" [routerLink]="['/empleados/editar', e.id]"><i class="fas fa-edit"></i></a></td>
-              <td><button class="btn-danger btn-sm" (click)="onDelete(e.id!)"><i class="fas fa-trash-alt"></i></button></td>
+              <td>
+<button
+  *ngIf="e.estado === 'ACTIVO'"
+  class="btn btn-outline-danger btn-sm"
+  (click)="onInactivar(e.id)">
+  <i class="fas fa-user-slash"></i> Dar de baja
+</button>
+
+<button
+  *ngIf="e.estado === 'INACTIVO'"
+  class="btn btn-outline-success btn-sm"
+  (click)="onActivar(e.id)">
+  <i class="fas fa-user-check"></i> Reactivar
+</button>
+</td>
             </tr>
           </tbody>
         </table>

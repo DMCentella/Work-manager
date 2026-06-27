@@ -13,3 +13,9 @@
 .btn-input-group-dark { background: var(--dark-bg); color: #FFF; border: 1px solid var(--dark-bg); font-weight: 500; cursor: pointer; padding: 0.65rem 0.8rem; }
 .btn-input-group:hover { background: #E4E4E7; }
 .btn-input-group-dark:hover { background: #27272A; }
+.text-muted{
+    font-size:.78rem;
+    margin-top:4px;
+    display:block;
+    color:#6B7280;
+}

@@ -1,5 +1,6 @@
 package com.microservicios.empleado.dto;
 
+import com.microservicios.empleado.enums.Estadoempleado;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,4 +21,5 @@ public class EmpleadoResponse {
     private Date fecha;
     private String cargo;
     private String departamento;
+    private Estadoempleado estado;
 }

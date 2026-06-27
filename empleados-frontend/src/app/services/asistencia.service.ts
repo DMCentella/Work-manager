@@ -32,7 +32,12 @@ export class AsistenciaService {
     return this.http.get<{ count: number }>(`${this.base}/count/hoy`);
   }
 
-  exportarPDF(empleadoId: number, nombreEmpleado: string): string {
-    return `${this.base}/export/pdf/empleado/${empleadoId}?nombreEmpleado=${encodeURIComponent(nombreEmpleado)}`;
-  }
+exportarPDF(empleadoId: number, nombreEmpleado: string): Observable<Blob> {
+  return this.http.get(
+    `${this.base}/export/pdf/empleado/${empleadoId}?nombreEmpleado=${encodeURIComponent(nombreEmpleado)}`,
+    {
+      responseType: 'blob'
+    }
+  );
+}
 }

@@ -9,10 +9,12 @@ import java.time.LocalTime;
 
 @Data
 public class AsistenciaRequest {
-    @NotNull
+    @NotNull(message = "El ID del empleado es obligatorio")
     private Long empleadoId;
 
     private LocalDate fecha;
     private LocalTime hora;
+
+    @NotNull(message = "El estado de asistencia es obligatorio")
     private EstadoAsistencia estado = EstadoAsistencia.PRESENTE;
 }

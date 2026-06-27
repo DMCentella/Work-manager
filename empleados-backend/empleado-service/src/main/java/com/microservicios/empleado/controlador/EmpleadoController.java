@@ -38,6 +38,8 @@ public class EmpleadoController {
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "5") int size,
             @RequestParam(name = "search", required = false) String search) {
+        if (page < 0) throw new IllegalArgumentException("El número de página no puede ser negativo");
+        if (size <= 0 || size > 100) throw new IllegalArgumentException("El tamaño de página debe estar entre 1 y 100");
         Pageable pageable = PageRequest.of(page, size);
         Page<Empleado> result = (search != null && !search.trim().isEmpty())
                 ? empleadoService.search(search.trim(), pageable)
@@ -70,10 +72,17 @@ public class EmpleadoController {
         return ResponseEntity.ok(empleadoMapper.toResponse(saved));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
-        empleadoService.delete(id);
-        return ResponseEntity.noContent().build();
+    @PutMapping("/{id}/inactivar")
+    public ResponseEntity<Void> inactivar(@PathVariable Long id) {
+        System.out.println("ENTRÓ AL CONTROLADOR");
+
+        empleadoService.inactivar(id);
+        return ResponseEntity.ok().build();
+    }
+    @PutMapping("/{id}/activar")
+    public ResponseEntity<Void> activar(@PathVariable Long id) {
+        empleadoService.activar(id);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/export/pdf")

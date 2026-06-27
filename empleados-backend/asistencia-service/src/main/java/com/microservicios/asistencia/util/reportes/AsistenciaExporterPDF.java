@@ -33,49 +33,54 @@ public class AsistenciaExporterPDF {
             document.add(new Paragraph("Control de Asistencia - " + nombreEmpleado, fontTitulo));
             document.add(new Paragraph(" "));
 
-            PdfPTable tabla = new PdfPTable(4);
-            tabla.setWidthPercentage(100);
-            tabla.setSpacingBefore(10);
+            if (asistencias == null || asistencias.isEmpty()) {
+                document.add(new Paragraph("No hay registros de asistencia.",
+                        FontFactory.getFont(FontFactory.HELVETICA, 12)));
+            } else {
+                PdfPTable tabla = new PdfPTable(4);
+                tabla.setWidthPercentage(100);
+                tabla.setSpacingBefore(10);
 
-            String[] headers = {"#", "Fecha", "Hora", "Estado"};
-            com.lowagie.text.Font headerFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, Color.WHITE);
-            for (String h : headers) {
-                PdfPCell cell = new PdfPCell(new Phrase(h, headerFont));
-                cell.setBackgroundColor(new Color(102, 126, 234));
-                cell.setPadding(5);
-                tabla.addCell(cell);
-            }
-
-            com.lowagie.text.Font dataFont = FontFactory.getFont(FontFactory.HELVETICA, 9);
-            long presentes = 0, tardanzas = 0, faltas = 0;
-            int n = 1;
-            for (Asistencia a : asistencias) {
-                tabla.addCell(new Phrase(String.valueOf(n++), dataFont));
-                tabla.addCell(new Phrase(a.getFecha() != null ? a.getFecha().toString() : "", dataFont));
-                tabla.addCell(new Phrase(a.getHora() != null ? a.getHora().toString() : "", dataFont));
-
-                com.lowagie.text.Font estadoFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 9);
-                if (a.getEstado() == EstadoAsistencia.PRESENTE) {
-                    estadoFont.setColor(new Color(34, 197, 94));
-                    presentes++;
-                } else if (a.getEstado() == EstadoAsistencia.TARDANZA) {
-                    estadoFont.setColor(new Color(234, 179, 8));
-                    tardanzas++;
-                } else {
-                    estadoFont.setColor(new Color(239, 68, 68));
-                    faltas++;
+                String[] headers = {"#", "Fecha", "Hora", "Estado"};
+                com.lowagie.text.Font headerFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, Color.WHITE);
+                for (String h : headers) {
+                    PdfPCell cell = new PdfPCell(new Phrase(h, headerFont));
+                    cell.setBackgroundColor(new Color(102, 126, 234));
+                    cell.setPadding(5);
+                    tabla.addCell(cell);
                 }
-                tabla.addCell(new Phrase(a.getEstado().name(), estadoFont));
+
+                com.lowagie.text.Font dataFont = FontFactory.getFont(FontFactory.HELVETICA, 9);
+                long presentes = 0, tardanzas = 0, faltas = 0;
+                int n = 1;
+                for (Asistencia a : asistencias) {
+                    tabla.addCell(new Phrase(String.valueOf(n++), dataFont));
+                    tabla.addCell(new Phrase(a.getFecha() != null ? a.getFecha().toString() : "", dataFont));
+                    tabla.addCell(new Phrase(a.getHora() != null ? a.getHora().toString() : "", dataFont));
+
+                    com.lowagie.text.Font estadoFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 9);
+                    if (a.getEstado() == EstadoAsistencia.PRESENTE) {
+                        estadoFont.setColor(new Color(34, 197, 94));
+                        presentes++;
+                    } else if (a.getEstado() == EstadoAsistencia.TARDANZA) {
+                        estadoFont.setColor(new Color(234, 179, 8));
+                        tardanzas++;
+                    } else {
+                        estadoFont.setColor(new Color(239, 68, 68));
+                        faltas++;
+                    }
+                    tabla.addCell(new Phrase(a.getEstado().name(), estadoFont));
+                }
+
+                document.add(tabla);
+
+                document.add(new Paragraph(" "));
+                com.lowagie.text.Font resumenFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10);
+                document.add(new Paragraph("Total registros: " + asistencias.size(), resumenFont));
+                document.add(new Paragraph("Presentes: " + presentes, resumenFont));
+                document.add(new Paragraph("Tardanzas: " + tardanzas, resumenFont));
+                document.add(new Paragraph("Faltas: " + faltas, resumenFont));
             }
-
-            document.add(tabla);
-
-            document.add(new Paragraph(" "));
-            com.lowagie.text.Font resumenFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10);
-            document.add(new Paragraph("Total registros: " + asistencias.size(), resumenFont));
-            document.add(new Paragraph("Presentes: " + presentes, resumenFont));
-            document.add(new Paragraph("Tardanzas: " + tardanzas, resumenFont));
-            document.add(new Paragraph("Faltas: " + faltas, resumenFont));
 
             document.close();
         } catch (DocumentException e) {

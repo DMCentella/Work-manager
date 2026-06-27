@@ -26,9 +26,25 @@ export class DashboardComponent implements OnInit {
     private asistService: AsistenciaService,
     private auth: AuthService
   ) {
-    this.exportUrl = this.empService.exportarPDF();
+    
   }
+descargarPDF(): void {
+  this.empService.exportarPDF().subscribe({
+    next: (blob: Blob) => {
+      const url = window.URL.createObjectURL(blob);
 
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'empleados.pdf';
+      a.click();
+
+      window.URL.revokeObjectURL(url);
+    },
+    error: (err) => {
+      console.error('Error al descargar PDF', err);
+    }
+  });
+}
   ngOnInit(): void {
     this.empService.count().subscribe(c => this.totalEmpleados = c);
     this.asistService.countHoy().subscribe(r => this.asistenciasHoy = r.count);

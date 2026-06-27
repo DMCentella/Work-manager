@@ -59,6 +59,7 @@ export class NotificationService implements OnDestroy {
           console.log('[STOMP] Notificacion recibida:', message.body);
           this.onMessage(message.body);
         });
+        
       }
 
       if (isAdmin) {
@@ -67,7 +68,15 @@ export class NotificationService implements OnDestroy {
           console.log('[STOMP] Dashboard recibido:', message.body);
           this.onMessage(message.body);
         });
+         console.log('[STOMP] Suscribiendo a /topic/notificaciones/admin');
+
+  this.client.subscribe('/topic/notificaciones/admin', (message: IMessage) => {
+    console.log('[STOMP] Notificación admin:', message.body);
+    this.onMessage(message.body);
+  });
       }
+
+
     };
 
     this.client.onStompError = (frame) => {
@@ -136,4 +145,5 @@ export class NotificationService implements OnDestroy {
   ngOnDestroy(): void {
     this.disconnect();
   }
+  
 }

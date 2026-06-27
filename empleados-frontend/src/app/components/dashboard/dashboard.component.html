@@ -81,7 +81,9 @@
           <div class="quick-actions">
             <a class="btn-dark-action" routerLink="/empleados"><i class="fas fa-list"></i> Ver Empleados</a>
             <a class="btn-green" routerLink="/empleados/nuevo"><i class="fas fa-user-plus"></i> Nuevo</a>
-            <a class="btn-outline-custom" [href]="exportUrl"><i class="fas fa-file-pdf"></i> PDF</a>
+            <button class="btn btn-danger" (click)="descargarPDF()">
+    Exportar PDF
+</button>
           </div>
         </div>
       </div>

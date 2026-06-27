@@ -28,8 +28,17 @@ public class TareaListener {
 
     @RabbitListener(queues = "tarea.completada.queue")
     public void onTareaCompletada(TareaCreadaEvent event) {
-        Notificacion n = notificacionService.crear(event.getEmpleadoId(),
-                "Tarea completada: " + event.getDescripcion());
-        messagingTemplate.convertAndSend("/topic/notificaciones/" + event.getEmpleadoId(), n);
+        System.out.println(">>> ENTRE A onTareaCompletada");
+        System.out.println("Empleado: " + event.getEmpleadoId());
+
+        Notificacion n = notificacionService.crear(
+                null,
+                "El empleado completó la tarea: " + event.getDescripcion());
+
+
+        messagingTemplate.convertAndSend(
+                "/topic/notificaciones/admin",
+                n
+        );
     }
 }

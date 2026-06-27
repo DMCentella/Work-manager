@@ -13,6 +13,7 @@ export interface Empleado {
   fecha: string;
   cargo: string;
   departamento: string;
+  estado: 'ACTIVO' | 'INACTIVO';
 }
 
 export interface PageResponse {
@@ -47,9 +48,13 @@ export class EmpleadoService {
     return this.http.put<Empleado>(`${this.base}/${id}`, empleado);
   }
 
-  eliminar(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.base}/${id}`);
-  }
+inactivar(id: number) {
+  return this.http.put(`${this.base}/${id}/inactivar`, {});
+}
+
+activar(id: number) {
+  return this.http.put(`${this.base}/${id}/activar`, {});
+}
 
   count(): Observable<number> {
     return this.http.get<number>(`${this.base}/count`);
@@ -63,7 +68,9 @@ export class EmpleadoService {
     return this.http.get<{ [key: string]: number }>(`${this.base}/sexos`);
   }
 
-  exportarPDF(): string {
-    return `${this.base}/export/pdf`;
-  }
+exportarPDF(): Observable<Blob> {
+  return this.http.get(`${this.base}/export/pdf`, {
+    responseType: 'blob'
+  });
+}
 }

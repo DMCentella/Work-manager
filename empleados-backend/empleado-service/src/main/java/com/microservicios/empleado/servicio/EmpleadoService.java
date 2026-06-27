@@ -2,7 +2,11 @@ package com.microservicios.empleado.servicio;
 
 import com.microservicios.empleado.dto.EmpleadoCesadoEvent;
 import com.microservicios.empleado.entidad.Empleado;
+import com.microservicios.empleado.enums.Estadoempleado;
 import com.microservicios.empleado.repositorio.EmpleadoRepository;
+import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,8 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 public class EmpleadoService {
 
+    private static final Logger log = LoggerFactory.getLogger(EmpleadoService.class);
     private final EmpleadoRepository empleadoRepository;
     private final RabbitTemplate rabbitTemplate;
 
@@ -44,13 +50,24 @@ public class EmpleadoService {
         return empleadoRepository.save(empleado);
     }
 
-    public void delete(Long id) {
-        Empleado e = empleadoRepository.findById(id).orElse(null);
-        empleadoRepository.deleteById(id);
-        if (e != null) {
-            rabbitTemplate.convertAndSend("notificaciones.exchange", "empleado.cesado",
-                    new EmpleadoCesadoEvent(e.getId(), e.getNombre()));
-        }
+    public void inactivar(Long id) {
+        Empleado e = empleadoRepository.findById(id)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("El empleado con ID " + id + " no existe"));
+
+        e.setEstado(Estadoempleado.INACTIVO);
+
+        empleadoRepository.save(e);
+    }
+
+    public void activar(Long id) {
+        Empleado e = empleadoRepository.findById(id)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Empleado no encontrado"));
+
+        e.setEstado(Estadoempleado.ACTIVO);
+
+        empleadoRepository.save(e);
     }
 
     public long count() {

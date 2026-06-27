@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { NgFor, NgIf } from '@angular/common';
+import { NgFor, NgIf, NgClass } from '@angular/common';
 import { EmpleadoService, Empleado, PageResponse } from '../../services/empleado.service';
 import { PaginationComponent } from '../pagination/pagination.component';
 
 @Component({
   selector: 'app-empleado-list',
   standalone: true,
-  imports: [RouterLink, FormsModule, NgFor, NgIf, PaginationComponent],
+  imports: [RouterLink, FormsModule, NgFor, NgIf,  PaginationComponent],
   templateUrl: './empleado-list.component.html',
   styleUrls: ['./empleado-list.component.css']
 })
@@ -21,8 +21,25 @@ export class EmpleadoListComponent implements OnInit {
   exportUrl = '';
 
   constructor(private empService: EmpleadoService) {
-    this.exportUrl = this.empService.exportarPDF();
+  
+  
+    
   }
+
+  descargarPDF() {
+    this.empService.exportarPDF().subscribe({
+        next: (blob) => {
+            const url = window.URL.createObjectURL(blob);
+
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'empleados.pdf';
+            a.click();
+
+            window.URL.revokeObjectURL(url);
+        }
+    });
+}
 
   ngOnInit(): void {
     this.loadData();
@@ -54,9 +71,14 @@ export class EmpleadoListComponent implements OnInit {
     this.loadData();
   }
 
-  onDelete(id: number): void {
-    if (confirm('¿Estás seguro de eliminar al empleado?')) {
-      this.empService.eliminar(id).subscribe(() => this.loadData());
-    }
+onInactivar(id: number): void {
+  if (confirm('¿Estás seguro de dar de baja al empleado?')) {
+    this.empService.inactivar(id).subscribe(() => this.loadData());
   }
+}
+onActivar(id: number): void {
+  if (confirm('¿Deseas reactivar al empleado?')) {
+    this.empService.activar(id).subscribe(() => this.loadData());
+  }
+}
 }

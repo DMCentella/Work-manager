@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { NgFor, NgIf } from '@angular/common';
 import { TareaService, TareaEmpleado } from '../../services/tarea.service';
 import { EmpleadoService, Empleado } from '../../services/empleado.service';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-tarea-gestion',
@@ -21,13 +22,17 @@ export class TareaGestionComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private tareaService: TareaService,
-    private empService: EmpleadoService
+    private empService: EmpleadoService,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
     this.empleadoId = +this.route.snapshot.paramMap.get('id')!;
     this.empService.obtener(this.empleadoId).subscribe(e => this.empleado = e);
     this.loadTareas();
+    this.notificationService.notifications$.subscribe(() => {
+  this.loadTareas();
+});
   }
 
   loadTareas(): void {
