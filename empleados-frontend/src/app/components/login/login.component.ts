@@ -3,6 +3,7 @@ import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-login',
@@ -18,8 +19,9 @@ export class LoginComponent {
   success = '';
   loading = false;
 
-  constructor(private auth: AuthService, private router: Router) {
+  constructor(private auth: AuthService, private router: Router,   private notificationService: NotificationService) {
     if (this.auth.isLoggedIn()) {
+      
       this.router.navigate([this.auth.isAdmin() ? '/dashboard' : '/mi-panel']);
     }
   }
@@ -30,7 +32,13 @@ export class LoginComponent {
     this.error = '';
     this.auth.login(this.username, this.password).subscribe({
       next: (res) => {
-        this.router.navigate([res.roles.includes('ROLE_ADMIN') ? '/dashboard' : '/mi-panel']);
+          this.notificationService.connect();
+
+  this.router.navigate([
+    res.roles.includes('ROLE_ADMIN')
+      ? '/dashboard'
+      : '/mi-panel'
+  ]);
       },
       error: () => {
         this.error = 'Usuario o contraseña inválidos';
